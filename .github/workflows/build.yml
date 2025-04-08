@@ -30,6 +30,14 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          mac_identity: ${{ secrets.MAC_CERTIFICATE }}
+          mac_identity_password: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
+          mac_provisioning_profile: ${{ secrets.MAC_PROVISIONING_PROFILE }}
 
         env:
-          GH_TOKEN: ${{ secrets.github_token }} 
+          GH_TOKEN: ${{ secrets.github_token }}
+          CSC_LINK: ${{ secrets.MAC_CERTIFICATE }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
+          APPLEID: ${{ secrets.APPLE_ID }}
+          APPLEIDPASS: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }} 
