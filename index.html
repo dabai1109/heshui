@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喝点水吧</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <!-- <nav class="app-header">
+            <div class="app-logo">
+                <i class="bi bi-droplet-fill logo-icon"></i>
+                <h1 class="logo-text">健康喝水助手</h1>
+            </div>
+            <div class="app-actions">
+                <button id="settings-btn" class="btn-icon" title="设置">
+                    <i class="bi bi-gear-fill"></i>
+                </button>
+            </div>
+        </nav> -->
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 日期选择器 -->
+            <div class="date-selector">
+                <div class="date-info">
+                    <h1 class="logo-text">
+                        <i class="bi bi-droplet-fill logo-icon"></i>健康喝水助手
+                    </h1>
+                    <p id="date-subtitle" class="text-muted">多多喝水，瘦成棒槌</p>
+                </div>
+                <div class="date-control">
+                    <input type="date" id="date-picker" class="form-control">
+                </div>
+                <div class="app-actions">
+                    <button id="settings-btn" class="btn-icon" title="设置">
+                        <i class="bi bi-gear-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 水分摄入统计卡片 -->
+            <div class="stats-card">
+                <div class="water-stats">
+                    <div class="water-progress-container">
+                        <div class="water-wave-animation">
+                            <div class="water-wave" id="water-wave"></div>
+                            <div class="water-percentage" id="water-percentage">0%</div>
+                        </div>
+                    </div>
+                    <div class="water-stats-info">
+                        <div class="stats-item">
+                            <span class="stats-label">已饮水量</span>
+                            <span class="stats-value" id="water-consumed">0 ml</span>
+                        </div>
+                        <div class="stats-item">
+                            <span class="stats-label">目标量</span>
+                            <span class="stats-value" id="water-target">2000 ml</span>
+                        </div>
+                        <div class="stats-item">
+                            <span class="stats-label">剩余量</span>
+                            <span class="stats-value" id="water-remaining">2000 ml</span>
+                        </div>
+                        <div class="stats-item">
+                            <span class="stats-label">下次提醒</span>
+                            <span class="stats-value" id="next-reminder">--:--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 水分摄入记录和添加卡片 -->
+            <div class="content-row">
+                <!-- 喝水记录列表 -->
+                <div class="log-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-list-ul me-2"></i>喝水记录
+                    </h3>
+                    <div id="water-logs" class="water-logs-container">
+                        <!-- 动态生成的记录内容 -->
+                    </div>
+                </div>
+
+                <!-- 记录喝水面板 -->
+                <div class="add-water-card">
+                    <h3 class="card-title">
+                        <i class="bi bi-plus-circle me-2"></i>记录喝水
+                    </h3>
+                    <div class="add-water-content">
+                        <div class="cup-selection">
+                            <div class="cup-selection-label">选择水杯</div>
+                            <div class="cup-options" id="cup-options">
+                                <!-- 动态生成的杯子选项 -->
+                            </div>
+                        </div>
+                        <div class="custom-amount-input">
+                            <label for="custom-amount">自定义数量 (ml)</label>
+                            <input type="number" id="custom-amount" class="form-control" value="0" min="0">
+                        </div>
+                        <button id="log-water-btn" class="btn btn-primary btn-lg w-100 mt-3">
+                            <i class="bi bi-plus-circle me-2"></i>记录喝水
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置面板（默认隐藏） -->
+        <div id="settings-panel" class="settings-panel">
+            <div class="settings-header">
+                <h3>
+                    <i class="bi bi-gear-fill me-2"></i>应用设置
+                </h3>
+                <button id="close-settings-btn" class="btn-icon">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="settings-content">
+                <div class="settings-group">
+                    <label for="cup-size" class="form-label">默认杯子大小 (ml)</label>
+                    <input type="number" id="cup-size" class="form-control" min="50">
+                </div>
+                <div class="settings-group">
+                    <label for="daily-target" class="form-label">每日目标 (ml)</label>
+                    <input type="number" id="daily-target" class="form-control" min="500">
+                </div>
+                <div class="settings-group">
+                    <label for="notification-interval" class="form-label">提醒间隔 (分钟)</label>
+                    <input type="number" id="notification-interval" class="form-control" min="1" max="120" disabled>
+                </div>
+                <div class="settings-group">
+                    <label class="form-label">工作时间</label>
+                    <div class="time-range-controls">
+                        <select id="work-start" class="form-select">
+                            <!-- 动态生成的时间选项 -->
+                        </select>
+                        <span class="time-separator">至</span>
+                        <select id="work-end" class="form-select">
+                            <!-- 动态生成的时间选项 -->
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <label class="form-label">工作日</label>
+                    <div class="weekday-selection">
+                        <label class="weekday-checkbox" for="monday">
+                            <input class="form-check-input" type="checkbox" value="1" id="monday">
+                            <span>周一</span>
+                        </label>
+                        <label class="weekday-checkbox" for="tuesday">
+                            <input class="form-check-input" type="checkbox" value="2" id="tuesday">
+                            <span>周二</span>
+                        </label>
+                        <label class="weekday-checkbox" for="wednesday">
+                            <input class="form-check-input" type="checkbox" value="3" id="wednesday">
+                            <span>周三</span>
+                        </label>
+                        <label class="weekday-checkbox" for="thursday">
+                            <input class="form-check-input" type="checkbox" value="4" id="thursday">
+                            <span>周四</span>
+                        </label>
+                        <label class="weekday-checkbox" for="friday">
+                            <input class="form-check-input" type="checkbox" value="5" id="friday">
+                            <span>周五</span>
+                        </label>
+                        <label class="weekday-checkbox" for="saturday">
+                            <input class="form-check-input" type="checkbox" value="6" id="saturday">
+                            <span>周六</span>
+                        </label>
+                        <label class="weekday-checkbox" for="sunday">
+                            <input class="form-check-input" type="checkbox" value="0" id="sunday">
+                            <span>周日</span>
+                        </label>
+                    </div>
+                </div>
+                <button id="save-settings-btn" class="btn btn-primary btn-lg w-100 mt-3">
+                    <i class="bi bi-save me-2"></i>保存设置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提醒弹窗 -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="reminder-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="bi bi-droplet-fill text-primary me-2"></i>
+                <strong class="me-auto">喝点水吧</strong>
+                <small>刚刚</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                已经一段时间没有喝水了，该补充水分啦！
+            </div>
+        </div>
+    </div>
+
+    <!-- 杯子选择模板 -->
+    <template id="cup-template">
+        <div class="cup-option" data-value="250">
+            <div class="cup-icon">
+                <i class="bi bi-cup-hot-fill"></i>
+            </div>
+            <div class="cup-details">
+                <div class="cup-name">标准杯</div>
+                <div class="cup-size">250ml</div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 喝水记录项模板 -->
+    <template id="water-log-template">
+        <div class="water-log-item">
+            <div class="log-time">12:30</div>
+            <div class="log-amount">250ml</div>
+            <div class="log-actions">
+                <button class="btn-delete" title="删除记录">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="renderer.js"></script>
+</body>
+
+</html>
