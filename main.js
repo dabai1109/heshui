@@ -38,7 +38,7 @@ let tray = null;
 
 // 创建默认图标
 const createDefaultIcon = () => {
-    const iconPath = path.join(__dirname, 'assets', 'icons', 'icon.png');
+    const iconPath = path.join(__dirname, 'assets', 'icons', 'tray.png');
     return nativeImage.createFromPath(iconPath);
 };
 
